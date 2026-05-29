@@ -13,15 +13,32 @@ let alertTrackingList = JSON.parse(localStorage.getItem('alertTracking')) || [];
 let currentPrices = {}; // 실시간으로 계속 변경될 변동 가격 창고
 
 // 앱 초기 구동
-window.onload = () => {
-    initializePrices();
+// [기존 코드의 상단 변수들은 그대로 두시고, window.onload만 이렇게 교체하세요]
+
+window.onload = async () => {
+    // 1. 서버에서 데이터를 가져오는 통로를 연결합니다.
+    try {
+        const response = await fetch('https://soundshop-backend.onrender.com/api/search');
+        const serverData = await response.json();
+        
+        // 서버에서 받아온 데이터를 우리 앱의 '가격 창고'에 저장합니다.
+        currentPrices = serverData; 
+    } catch (e) {
+        // 혹시라도 서버 연결이 안 될 경우를 대비해 기존 데이터를 씁니다.
+        console.error("서버 연결 실패, 기본값 사용", e);
+        initializePrices(); 
+    }
+    
+    // 2. 나머지 기능들을 순서대로 실행합니다.
     setupFilters();
     triggerSearch();
     renderTrackList();
     
-    // 🔔 대망의 킬러 기능: 4초마다 무작위 주기로 실시간 가격 변동 시뮬레이션 가동!
+    // 3. 4초마다 변동되는 시뮬레이션도 그대로 작동합니다.
     setInterval(simulateMarketPriceChange, 4000);
 };
+
+// [이 아래의 triggerSearch, simulateMarketPriceChange 등 기존 함수들은 모두 그대로 두세요!]
 
 // 최초 기본 가격 세팅 (history 데이터 기반)
 function initializePrices() {
