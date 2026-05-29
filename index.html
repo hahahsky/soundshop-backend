@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danawa Smart-Pro : 실시간 최저가 추적기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-inner">
+            <h1 class="logo" onclick="resetFilters()">DANAWA<span>PRO</span></h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="디지털 기기명 또는 스펙을 입력하세요 (예: 노이즈캔슬링, 로지텍)" onkeypress="handleKeyPress(event)">
+                <button onclick="triggerSearch()">검색</button>
+            </div>
+            <div class="system-status">
+                <span class="pulse-icon"></span>
+                <span style="font-size: 13px; color: #10b981; font-weight: bold;">LIVE 가격 엔진 가동 중</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="filter-group">
+                <h3>카테고리</h3>
+                <ul class="filter-list" id="catFilter">
+                    <li data-value="all" class="active">전체보기</li>
+                    <li data-value="audio">🎧 음향 전문관</li>
+                    <li data-value="pc">⌨️ PC 주변기기</li>
+                </ul>
+            </div>
+
+            <div class="filter-group">
+                <h3>스마트 정렬</h3>
+                <select id="sortEngine" onchange="triggerSearch()">
+                    <option value="rank">🔥 인기 순위순</option>
+                    <option value="low">💵 최저가 최적순</option>
+                    <option value="high">📈 최고가순</option>
+                </select>
+            </div>
+
+            <div class="widget">
+                <h3>🔔 최저가 감시 목록</h3>
+                <ul id="alertTrackList" class="track-list">
+                    </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-bar">
+                <h2 id="viewTitle">실시간 통합 최저가 검색 결과</h2>
+                <span id="matchCounter" class="counter">계산 중...</span>
+            </div>
+
+            <div id="productGrid" class="product-grid"></div>
+        </section>
+    </div>
+
+    <div id="toastCenter" class="toast-center"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
