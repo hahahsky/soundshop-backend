@@ -4,7 +4,7 @@ const app = express();
 
 app.use(cors());
 
-// 🚨 네이버 API 키 입력 (네이버 개발자 센터에서 발급받은 키로 교체하세요)
+// 👑 발급받으신 네이버 API 키를 코드가 바로 인식하도록 적용했습니다!
 const NAVER_CLIENT_ID = 'KF5yyMLM_MUYjmuh24ia'; 
 const NAVER_CLIENT_SECRET = 'ekuTFSjgZF';
 
